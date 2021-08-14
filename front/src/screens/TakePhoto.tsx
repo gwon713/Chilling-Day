@@ -103,9 +103,10 @@ export default function TakePhoto({ navigation }) {
 
         setPhotoUrl(takenPhoto);
 
-        navigation.navigate('AddRecipe', {
-            file: takenPhoto,
-        });
+        navigation.navigate('UploadForm');
+        // navigation.navigate('AddRecipe', {
+        //     file: takenPhoto,
+        // });
     };
 
     const onUpload = () => {
