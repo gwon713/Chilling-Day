@@ -8,6 +8,7 @@ import { GrayText, HighlightText, StrongText } from 'components/commons/Text';
 import { createStackNavigator } from '@react-navigation/stack';
 import TakePhoto from './TakePhoto';
 import SelectPhoto from './SelectPhoto';
+import UploadForm from './UploadForm';
 
 const TopContainer = styled.View`
     display: flex;
@@ -67,7 +68,13 @@ export default function Home() {
             <Stack.Screen 
                 name="Select" 
                 options={{ title: 'Choose a photo', headerShown: false }} 
-                component={SelectPhoto} />
+                component={SelectPhoto} 
+            />
+            <Stack.Screen 
+                name="UploadForm"
+                options={{ headerShown: false }}
+                component={UploadForm}
+            />
         </Stack.Navigator>
         
     );
