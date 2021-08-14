@@ -10,7 +10,7 @@ const createTreeStore = () => {
     });
 
     const $public = observable({
-        async getTreeInfo(userId) {
+        async getTree(userId) {
             const {
                 user_tree: { total_tree: totalCountOfTree, tree_progress: treeProgress, tree_remaining: remainingDaysForComplete },
             } = await getTreeInfo(userId);

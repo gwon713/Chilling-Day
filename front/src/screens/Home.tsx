@@ -27,7 +27,7 @@ const BottomContainer = styled.View`
     align-items: center;
 `;
 
-const HomeScreen = observer(() => {
+function HomeScreen({ navigation }) {
     const { username } = getUserStore();
     const { treeProgress, remainingDaysForComplete } = getTreeStore();
     const isChillingDay = true;
@@ -48,11 +48,11 @@ const HomeScreen = observer(() => {
             <BottomContainer>
                 <Text>나무 1그루까지</Text>
                 <StrongText>{remainingDaysForComplete} days</StrongText>
-                <ChillingButton />
+                <ChillingButton navigation={navigation} />
             </BottomContainer>
         </ScreenLayout>
     );
-});
+}
 
 export default function Home() {
     const Stack = createStackNavigator();

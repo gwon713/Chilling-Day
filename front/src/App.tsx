@@ -10,17 +10,23 @@ import { getTreeStore } from 'stores/TreeStore';
 const App = observer(() => {
     const { getUser } = getUserStore();
     const { getTree } = getTreeStore();
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
 
-    const onFinish = () => setLoading(false);
+    const onFinish = () => {
+        setLoading(false);
+    };
 
     const preload = async () => {
-        const { id } = await getUser();
+        const { id } = await getUser(Math.floor(Math.random() * 2) + 1);
         await getTree(id);
     };
 
-    if (loading) {
-        return <AppLoading startAsync={preload} onError={console.warn} onFinish={onFinish} />;
+    const handleError = (error) => {
+        console.error(error);
+    };
+
+    if (isLoading) {
+        return <AppLoading startAsync={preload} onError={handleError} onFinish={onFinish} />;
     }
 
     return (
