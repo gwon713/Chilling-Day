@@ -1,0 +1,4 @@
+.vscode/*
+dist/*
+.expo/*
+package-lock.json 
