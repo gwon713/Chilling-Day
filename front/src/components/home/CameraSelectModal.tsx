@@ -48,7 +48,6 @@ const CloseButtonContainer = styled.View`
 const CloseButton = styled.TouchableNativeFeedback``;
 
 export default function CameraSelectModal({ modalVisible, closeModal, navigation }) {
-    // const navigation = useNavigation();
     const handleCameraPress = () => {
         navigation.navigate('Take');
     };

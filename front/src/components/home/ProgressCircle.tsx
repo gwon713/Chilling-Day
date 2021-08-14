@@ -21,7 +21,6 @@ const ProgressCircle = ({ percent }: ProgressCircleProps) => {
             width={1}
             fill={percent}
             tintColor={COLORS.MAIN}
-            onAnimationComplete={() => console.log('onAnimationComplete')}
             renderCap={({ center }) => <Circle cx={center.x} cy={center.y} r="3" fill={COLORS.MAIN} />}>
             {() => (
                 <Icon>
