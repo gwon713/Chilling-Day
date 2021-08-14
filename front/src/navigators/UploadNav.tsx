@@ -6,17 +6,13 @@ import TakePhoto from 'screens/TakePhoto';
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
-export default function UploadNav(){
+export default function UploadNav() {
     return (
         <Tab.Navigator>
             <Tab.Screen name="Select">
                 {() => (
                     <Stack.Navigator>
-                        <Stack.Screen 
-                            name="Select"
-                            options={{ title: "Choose a photo" }}
-                            component={SelectPhoto}
-                        />
+                        <Stack.Screen name="Select" options={{ title: 'Choose a photo' }} component={SelectPhoto} />
                     </Stack.Navigator>
                 )}
             </Tab.Screen>
