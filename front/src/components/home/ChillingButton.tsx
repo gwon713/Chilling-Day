@@ -20,7 +20,7 @@ const ChillButtonText = styled.Text`
     color: ${COLORS.MAIN};
 `;
 
-export default function ChillingButton() {
+export default function ChillingButton({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
 
     const openModal = () => {
@@ -35,7 +35,7 @@ export default function ChillingButton() {
             <ChillButtonContainer onPress={openModal}>
                 <ChillButtonText>Chill</ChillButtonText>
             </ChillButtonContainer>
-            <CameraSelectModal modalVisible={modalVisible} closeModal={closeModal} />
+            <CameraSelectModal modalVisible={modalVisible} closeModal={closeModal} navigation={navigation} />
         </>
     );
 }

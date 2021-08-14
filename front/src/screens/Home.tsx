@@ -5,6 +5,9 @@ import styled from 'styled-components/native';
 import ScreenLayout from 'components/ScreenLayout';
 import ChillingButton from 'components/home/ChillingButton';
 import { GrayText, HighlightText, StrongText } from 'components/commons/Text';
+import { createStackNavigator } from '@react-navigation/stack';
+import TakePhoto from './TakePhoto';
+import SelectPhoto from './SelectPhoto';
 
 const TopContainer = styled.View`
     display: flex;
@@ -21,10 +24,9 @@ const BottomContainer = styled.View`
     align-items: center;
 `;
 
-export default function Home() {
+function HomeScreen({ navigation }){
     const username = '박상혁';
     const isChillingDay = true;
-
     return (
         <ScreenLayout>
             <TopContainer>
@@ -41,8 +43,32 @@ export default function Home() {
             <BottomContainer>
                 <Text>나무 1그루까지</Text>
                 <StrongText>6 days</StrongText>
-                <ChillingButton />
+                <ChillingButton navigation={navigation}/>
             </BottomContainer>
         </ScreenLayout>
+    );
+}
+
+export default function Home() {
+    const Stack = createStackNavigator();
+
+    return (
+        <Stack.Navigator>
+            <Stack.Screen 
+                name="Home" 
+                options={{ headerShown: false }}
+                component={HomeScreen} 
+            />
+            <Stack.Screen 
+                name="Take" 
+                options={{ headerShown: false }}
+                component={TakePhoto} 
+            />
+            <Stack.Screen 
+                name="Select" 
+                options={{ title: 'Choose a photo', headerShown: false }} 
+                component={SelectPhoto} />
+        </Stack.Navigator>
+        
     );
 }
