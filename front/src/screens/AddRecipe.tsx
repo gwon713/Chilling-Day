@@ -15,8 +15,8 @@ import COLORS from 'constants/colors';
 import { useNavigation } from '@react-navigation/core';
 
 const TopContainer = styled.View`
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
 `;
@@ -104,7 +104,7 @@ const AddRecipe = observer(() => {
                 <StrongText style={{ textAlign: 'center' }}>{totalChillingDay + 1}번째 Chilling</StrongText>
             </TopContainer>
 
-            <Divider height={2} />
+            {/* <Divider height={2} /> */}
 
             <ImageContainer>
                 <Image style={{ width: 300, height: 217, borderRadius: 10 }} source={{ uri: photoUrl, cache: 'only-if-cached' }} />

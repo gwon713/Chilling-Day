@@ -10,10 +10,11 @@ import styled from 'styled-components/native';
 import { getTempStore } from 'stores/TempStore';
 import COLORS from 'constants/colors';
 import { useNavigation } from '@react-navigation/core';
+import { useCountUp } from 'use-count-up';
 
 const TopContainer = styled.View`
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
 `;
@@ -51,6 +52,11 @@ const Result = observer(() => {
     const { photoUrl } = getTempStore();
     const { getIngredients } = getIngredientStore();
     const [selectedIngredients, setSelectedIngredients] = useState([]);
+    const { value: percent } = useCountUp({
+        isCounting: true,
+        end: 37,
+        duration: 3,
+    });
 
     const handleGoNextPress = () => {
         // navigation.navigate();
@@ -71,7 +77,7 @@ const Result = observer(() => {
                 <StrongText style={{ textAlign: 'center' }}>{totalChillingDay + 1}번째 Chilling</StrongText>
             </TopContainer>
 
-            <Divider height={2} />
+            {/* <Divider height={2} /> */}
 
             <ImageContainer>
                 <Image style={{ width: 300, height: 217, borderRadius: 10 }} source={{ uri: photoUrl, cache: 'only-if-cached' }} />
@@ -80,7 +86,7 @@ const Result = observer(() => {
             <StrongText style={{ width: 300 }}>환경기여도</StrongText>
 
             <BottomContainer>
-                <HighlightText style={{ width: 300, textAlign: 'center', fontSize: 80 }}>37%</HighlightText>
+                <HighlightText style={{ width: 300, textAlign: 'center', fontSize: 80 }}>{percent}%</HighlightText>
                 <Text style={{ width: 300, textAlign: 'center' }}>의 탄소 절감을 달성했습니다. 🥳</Text>
             </BottomContainer>
 
