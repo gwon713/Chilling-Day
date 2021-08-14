@@ -25,7 +25,8 @@
             "screens/*": ["./src/screens/*"],
             "assets/*": ["./assets/*"],
             "utils/*": ["./src/utils/*"],
-            "navigators/*": ["./src/navigators/*"]
+            "navigators/*": ["./src/navigators/*"],
+            "constants/*": ["./src/constants/*"]
         },
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
