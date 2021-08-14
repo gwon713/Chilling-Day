@@ -7,11 +7,11 @@ import ChillingButton from 'components/home/ChillingButton';
 import { GrayText, HighlightText, StrongText } from 'components/commons/Text';
 import { getUserStore } from 'stores/UserStore';
 import { getTreeStore } from 'stores/TreeStore';
-import { observer } from 'mobx-react-lite';
 import { createStackNavigator } from '@react-navigation/stack';
 import TakePhoto from './TakePhoto';
 import SelectPhoto from './SelectPhoto';
 import UploadForm from './UploadForm';
+import AddRecipe from './AddRecipe';
 
 const TopContainer = styled.View`
     display: flex;
@@ -73,6 +73,7 @@ export default function Home() {
             <Stack.Screen name="Take" options={{ headerShown: false }} component={TakePhoto} />
             <Stack.Screen name="Select" options={{ title: 'Choose a photo', headerShown: false }} component={SelectPhoto} />
             <Stack.Screen name="UploadForm" options={{ headerShown: false }} component={UploadForm} />
+            <Stack.Screen name="AddRecipe" options={{ headerShown: false }} component={AddRecipe} />
         </Stack.Navigator>
     );
 }
