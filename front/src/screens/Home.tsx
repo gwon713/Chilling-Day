@@ -1,8 +1,7 @@
-/* eslint-disable  */
-import ScreenLayout from '../components/ScreenLayout';
 import React, { useState } from 'react';
 import { Modal, View, Text } from 'react-native';
 import styled from 'styled-components/native';
+import ScreenLayout from 'components/ScreenLayout';
 
 const Chillbutton = styled.TouchableOpacity`
     border-radius: 50px;
@@ -10,7 +9,7 @@ const Chillbutton = styled.TouchableOpacity`
     padding: 10px 20px;
 `;
 
-export default function Home({ navigation }) {
+export default function Home() {
     const [modalVisible, setModalVisible] = useState(false);
 
     const takePhotoBtnClick = () => {};
