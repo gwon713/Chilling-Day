@@ -1,8 +1,8 @@
-import AppLoading from 'expo-app-loading';
-import { registerRootComponent } from 'expo';
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import TabsNav from './navigators/TabsNav';
+import { registerRootComponent } from 'expo';
+import AppLoading from 'expo-app-loading';
+import TabsNav from 'navigators/TabsNav';
 
 const App = () => {
     const [loading, setLoading] = useState(true);

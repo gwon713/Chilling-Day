@@ -24,7 +24,8 @@
             "components/*": ["./src/components/*"],
             "screens/*": ["./src/screens/*"],
             "assets/*": ["./assets/*"],
-            "utils/*": ["./src/utils/*"]
+            "utils/*": ["./src/utils/*"],
+            "navigators/*": ["./src/navigators/*"]
         },
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
