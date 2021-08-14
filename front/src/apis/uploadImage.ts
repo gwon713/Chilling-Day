@@ -22,7 +22,8 @@ const uploadImage = async (userId: number, photoUrl) => {
         Accept: 'application/json'
     }, [
         JSON.stringify({ user_id: userId }),
-        { name: 'bb.jpg', filename: 'bb.png', data: photoUrl }
+        { name: 'bb.jpg', filename: 'bb.png', data: photoUrl },
+        { image_childay: 2 },
     ]
     ).then((res) => {
         console.log(res);

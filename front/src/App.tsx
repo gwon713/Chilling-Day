@@ -4,8 +4,8 @@ import { registerRootComponent } from 'expo';
 import AppLoading from 'expo-app-loading';
 import TabsNav from 'navigators/TabsNav';
 import { observer } from 'mobx-react-lite';
-import { getUserStore } from 'stores/UserStore';
-import { getTreeStore } from 'stores/TreeStore';
+import { getUserStore } from './stores/UserStore';
+import { getTreeStore } from './stores/TreeStore';
 
 const App = observer(() => {
     const { getUser } = getUserStore();
