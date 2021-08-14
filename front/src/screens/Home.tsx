@@ -11,6 +11,7 @@ import { observer } from 'mobx-react-lite';
 import { createStackNavigator } from '@react-navigation/stack';
 import TakePhoto from './TakePhoto';
 import SelectPhoto from './SelectPhoto';
+import UploadForm from './UploadForm';
 
 const TopContainer = styled.View`
     display: flex;
@@ -68,9 +69,26 @@ export default function Home() {
 
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Home" options={{ headerShown: false }} component={HomeScreen} />
-            <Stack.Screen name="Take" options={{ headerShown: false }} component={TakePhoto} />
-            <Stack.Screen name="Select" options={{ title: 'Choose a photo', headerShown: false }} component={SelectPhoto} />
+            <Stack.Screen 
+                name="Home" 
+                options={{ headerShown: false }}
+                component={HomeScreen} 
+            />
+            <Stack.Screen 
+                name="Take" 
+                options={{ headerShown: false }}
+                component={TakePhoto} 
+            />
+            <Stack.Screen 
+                name="Select" 
+                options={{ title: 'Choose a photo', headerShown: false }} 
+                component={SelectPhoto} 
+            />
+            <Stack.Screen 
+                name="UploadForm"
+                options={{ headerShown: false }}
+                component={UploadForm}
+            />
         </Stack.Navigator>
     );
 }
