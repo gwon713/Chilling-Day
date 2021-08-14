@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components/native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { Circle } from 'react-native-svg';
@@ -14,6 +14,21 @@ interface ProgressCircleProps {
 }
 
 const ProgressCircle = ({ percent }: ProgressCircleProps) => {
+    const emoji = useMemo(() => {
+        if (percent < 25) {
+            return '🌱';
+        }
+
+        if (percent < 50) {
+            return '🌿';
+        }
+
+        if (percent < 75) {
+            return '🪴';
+        }
+
+        return '🌲';
+    }, [percent]);
     return (
         <AnimatedCircularProgress
             rotation={0}
@@ -24,7 +39,7 @@ const ProgressCircle = ({ percent }: ProgressCircleProps) => {
             renderCap={({ center }) => <Circle cx={center.x} cy={center.y} r="3" fill={COLORS.MAIN} />}>
             {() => (
                 <Icon>
-                    <Text>🪴</Text>
+                    <Text>{emoji}</Text>
                 </Icon>
             )}
         </AnimatedCircularProgress>
