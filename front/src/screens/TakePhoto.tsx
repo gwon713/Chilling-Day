@@ -1,7 +1,8 @@
-import { Alert, Image, Text, TouchableOpacity } from 'react-native';
+import { Alert, View, Image, Text, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState, useRef } from 'react';
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
+import Slider from '@react-native-community/slider';
 import styled from "styled-components/native";
 import * as MediaLibrary from 'expo-media-library';
 
@@ -79,9 +80,9 @@ export default function TakePhoto({ navigation }) {
         }
     };
 
-    // const onZoomValueChange = (e) => {
-    //     setZoom(e);
-    // };
+    const onZoomValueChange = (e) => {
+        setZoom(e);
+    };
 
     const onFlashChange = () => {
         if (flashMode === Camera.Constants.FlashMode.off) {
@@ -139,7 +140,7 @@ export default function TakePhoto({ navigation }) {
                     ref={cameraRef}
                     onCameraReady={onCameraReady}
                 >
-                    <CloseButton onPress={() => navigation.navigate("Tabs")}>
+                    <CloseButton onPress={() => navigation.navigate("Home")}>
                         <Ionicons name="close" color="white" size={30}/>
                     </CloseButton>
                 </Camera>
@@ -148,11 +149,23 @@ export default function TakePhoto({ navigation }) {
             )}
             {takenPhoto === "" ? (
                 <Actions>
+                    <View>
+                        <Slider 
+                            style={{ width: 200, height: 20 }}
+                            value={zoom}
+                            minimumValue={0}
+                            maximumValue={1}
+                            minimumTrackTintColor="white"
+                            maximumTrackTintColor="rgba(255, 255, 255, 0.5)"
+                            onValueChange={onZoomValueChange}
+                        />
+                    </View>
                     <ButtonsContainer>
                         <TakePhotoBtn onPress={takePhoto}/>
                         <ActionsContainer>
                             <TouchableOpacity
                                 onPress={onFlashChange}
+                                style={{ marginRight: 30 }}
                             >
                                 <Ionicons 
                                     size={30}
