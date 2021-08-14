@@ -1,10 +1,11 @@
+import { registerRootComponent } from "expo"
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import TabsNav from './navigators/TabsNav';
 
-export default () {
+const App = () => {
   return (
  <NavigationContainer>
    <TabsNav />
@@ -20,3 +21,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default registerRootComponent(App);
