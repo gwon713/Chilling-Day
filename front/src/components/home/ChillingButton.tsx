@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import CameraSelectModal from './CameraSelectModal';
 import { LongButtonContainer, LongButtonText } from 'components/LongButton';
+import styled from 'styled-components/native';
+import COLORS from 'constants/colors';
 
 const ChillButtonText = styled.Text`
     font-weight: 700;
