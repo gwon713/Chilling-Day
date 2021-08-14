@@ -3,10 +3,6 @@ import COLORS from 'constants/colors';
 import React from 'react';
 import { Modal, Text, View } from 'react-native';
 import styled from 'styled-components/native';
-import { useNavigation } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import SelectPhoto from 'screens/SelectPhoto';
-import TakePhoto from 'screens/TakePhoto';
 
 const ModalContainer = styled.View`
     flex: 1;
