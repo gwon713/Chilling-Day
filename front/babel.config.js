@@ -13,6 +13,8 @@ module.exports = function (api) {
                         screens: './src/screens',
                         constants: './src/constants',
                         navigators: './src/navigators',
+                        apis: './src/apis',
+                        stores: './src/stores',
                         assets: './assets',
                     },
                 },
