@@ -54,8 +54,8 @@ function HomeScreen({ navigation }) {
             </ProgressCircleContainer>
             <BottomContainer>
                 <RemainingDaysForCompleteContainer hidden={!isChillingDay}>
-                    <Text>나무 1그루까지</Text>
-                    <StrongText>{remainingDaysForComplete} days</StrongText>
+                    <Text style={{ textAlign: 'center' }}>나무 1그루까지</Text>
+                    <StrongText style={{ textAlign: 'center' }}>{remainingDaysForComplete} days</StrongText>
                 </RemainingDaysForCompleteContainer>
                 <ChillingButton navigation={navigation} disabled={!isChillingDay} />
                 {!isChillingDay ? <GrayText>Chilling day 재설정</GrayText> : null}
@@ -69,26 +69,10 @@ export default function Home() {
 
     return (
         <Stack.Navigator>
-            <Stack.Screen 
-                name="Home" 
-                options={{ headerShown: false }}
-                component={HomeScreen} 
-            />
-            <Stack.Screen 
-                name="Take" 
-                options={{ headerShown: false }}
-                component={TakePhoto} 
-            />
-            <Stack.Screen 
-                name="Select" 
-                options={{ title: 'Choose a photo', headerShown: false }} 
-                component={SelectPhoto} 
-            />
-            <Stack.Screen 
-                name="UploadForm"
-                options={{ headerShown: false }}
-                component={UploadForm}
-            />
+            <Stack.Screen name="Home" options={{ headerShown: false }} component={HomeScreen} />
+            <Stack.Screen name="Take" options={{ headerShown: false }} component={TakePhoto} />
+            <Stack.Screen name="Select" options={{ title: 'Choose a photo', headerShown: false }} component={SelectPhoto} />
+            <Stack.Screen name="UploadForm" options={{ headerShown: false }} component={UploadForm} />
         </Stack.Navigator>
     );
 }
