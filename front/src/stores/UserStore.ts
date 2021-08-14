@@ -30,7 +30,7 @@ const createTreeStore = () => {
                 user_name: username,
             } = await getUserInfo(userId);
 
-            $user.set({
+            const user = {
                 id,
                 username,
                 email,
@@ -45,7 +45,11 @@ const createTreeStore = () => {
                     chillingDays.chil_day_fri,
                     chillingDays.chil_day_sat,
                 ],
-            });
+            };
+
+            $user.set(user);
+
+            return user;
         },
 
         get userId() {
