@@ -3,6 +3,8 @@ import ScreenLayout from '../components/ScreenLayout';
 import React, { useState } from 'react';
 import { Modal, View, Text } from 'react-native';
 import styled from 'styled-components/native';
+import UploadNav from '../navigators/UploadNav';
+import { NavigationContainer } from '@react-navigation/native';
 
 const Chillbutton = styled.TouchableOpacity`
     border-radius: 50px;
@@ -13,7 +15,9 @@ const Chillbutton = styled.TouchableOpacity`
 export default function Home({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
 
-    const takePhotoBtnClick = () => {};
+    const takePhotoBtnClick = () => {
+        navigation.navigate(UploadNav);
+    };
     const albumBtnClick = () => {};
 
     return (
@@ -48,7 +52,7 @@ export default function Home({ navigation }) {
                             <Text>Hide Modal</Text>
                         </Chillbutton>
                     </View>
-                    <Chillbutton onPress={() => takePhotoBtnClick}>
+                    <Chillbutton onPress={() => navigation.navigate('Take') }> 
                         <Text>직접 사진촬영</Text>
                     </Chillbutton>
                     <Chillbutton onPress={() => albumBtnClick}>

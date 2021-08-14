@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import SelectPhoto from 'screens/SelectPhoto';
-import TakePhoto from 'screens/TakePhoto';
+import SelectPhoto from '../screens/SelectPhoto';
+import TakePhoto from '../screens/TakePhoto';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
