@@ -1,3 +1,4 @@
+import COLORS from 'constants/colors';
 import styled from 'styled-components/native';
 
 export const GrayText = styled.Text`
@@ -9,5 +10,5 @@ export const StrongText = styled.Text`
     font-size: 16px;
 `;
 export const HighlightText = styled.Text`
-    color: #0acf20;
+    color: ${COLORS.MAIN};
 `;
