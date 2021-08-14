@@ -69,7 +69,7 @@ const createTreeStore = () => {
             const chillingDays = $user.get().chillingDays;
             const day = getDay(new Date());
 
-            return chillingDays[day];
+            return true; //chillingDays[day];
         },
 
         get remainingDaysUntilChilling() {

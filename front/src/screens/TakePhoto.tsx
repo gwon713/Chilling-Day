@@ -3,8 +3,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
-import styled from "styled-components/native";
+import styled from 'styled-components/native';
 import * as MediaLibrary from 'expo-media-library';
+import { getTempStore } from 'stores/TempStore';
 
 const Container = styled.View`
     flex: 1;
@@ -55,13 +56,14 @@ const TakePhotoBtn = styled.TouchableOpacity`
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function TakePhoto({ navigation }) {
+    const { setPhotoUrl } = getTempStore();
     const cameraRef = useRef(null);
-    const [ takenPhoto, setTakenPhoto ] = useState("");
-    const [ cameraReady, setCameraReady ] = useState(false);
-    const [ ok, setOk ] = useState(false);
-    const [ flashMode, setFlashMode ] = useState(Camera.Constants.FlashMode.off);
-    const [ zoom, setZoom ] = useState(0);
-    const [ cameraType, setCameraType ] = useState(Camera.Constants.Type.back);
+    const [takenPhoto, setTakenPhoto] = useState('');
+    const [cameraReady, setCameraReady] = useState(false);
+    const [ok, setOk] = useState(false);
+    const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
+    const [zoom, setZoom] = useState(0);
+    const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
 
     const getPermissions = async () => {
         const { granted } = await Camera.requestPermissionsAsync();
@@ -74,9 +76,9 @@ export default function TakePhoto({ navigation }) {
 
     const onCameraSwitch = () => {
         if (cameraType === Camera.Constants.Type.front) {
-          setCameraType(Camera.Constants.Type.back);
+            setCameraType(Camera.Constants.Type.back);
         } else {
-          setCameraType(Camera.Constants.Type.front);
+            setCameraType(Camera.Constants.Type.front);
         }
     };
 
@@ -86,71 +88,69 @@ export default function TakePhoto({ navigation }) {
 
     const onFlashChange = () => {
         if (flashMode === Camera.Constants.FlashMode.off) {
-          setFlashMode(Camera.Constants.FlashMode.on);
+            setFlashMode(Camera.Constants.FlashMode.on);
         } else if (flashMode === Camera.Constants.FlashMode.on) {
-          setFlashMode(Camera.Constants.FlashMode.auto);
+            setFlashMode(Camera.Constants.FlashMode.auto);
         } else if (flashMode === Camera.Constants.FlashMode.auto) {
-          setFlashMode(Camera.Constants.FlashMode.off);
+            setFlashMode(Camera.Constants.FlashMode.off);
         }
     };
 
     const goToUpload = async (save) => {
         if (save) {
-          await MediaLibrary.saveToLibraryAsync(takenPhoto);
+            await MediaLibrary.saveToLibraryAsync(takenPhoto);
         }
-        navigation.navigate("UploadForm", {
-          file: takenPhoto,
+
+        setPhotoUrl(takenPhoto);
+
+        navigation.navigate('AddRecipe', {
+            file: takenPhoto,
         });
     };
 
     const onUpload = () => {
-        Alert.alert("Save photo?", "Save photo & upload or just upload", [
-          {
-            text: "Save & Upload",
-            onPress: () => goToUpload(true),
-          },
-          {
-            text: "Just Upload",
-            onPress: () => goToUpload(false),
-          },
-        ]);
+        goToUpload(false);
+        // Alert.alert('Save photo?', 'Save photo & upload or just upload', [
+        //     {
+        //         text: 'Save & Upload',
+        //         onPress: () => goToUpload(true),
+        //     },
+        //     {
+        //         text: 'Just Upload',
+        //         onPress: () => goToUpload(false),
+        //     },
+        // ]);
     };
 
     const onCameraReady = () => setCameraReady(true);
 
     const takePhoto = async () => {
         if (cameraRef.current && cameraReady) {
-            const { uri } = await cameraRef.current.takePictureAsync({
-                quality: 1,
-                exif: true,
+            const { uri, base64 } = await cameraRef.current.takePictureAsync({
+                quality: 0,
+                base64: true,
             });
-            setTakenPhoto(uri);
+
+            setTakenPhoto(`data:image/jpg;base64,${base64}`);
         }
     };
-    const onDismiss = () => setTakenPhoto("");
+    const onDismiss = () => setTakenPhoto('');
 
     return (
         <Container>
-            {takenPhoto === "" ? (
-                <Camera 
-                    type={cameraType} 
-                    style={{ flex: 1 }} 
-                    zoom={zoom}
-                    flashMode={flashMode}
-                    ref={cameraRef}
-                    onCameraReady={onCameraReady}
-                >
-                    <CloseButton onPress={() => navigation.navigate("Home")}>
-                        <Ionicons name="close" color="white" size={30}/>
+            {takenPhoto === '' ? (
+                <Camera type={cameraType} style={{ flex: 1 }} zoom={zoom} flashMode={flashMode} ref={cameraRef} onCameraReady={onCameraReady}>
+                    <CloseButton onPress={() => navigation.navigate('Home')}>
+                        <Ionicons name="close" color="white" size={30} />
                     </CloseButton>
                 </Camera>
             ) : (
                 <Image source={{ uri: takenPhoto }} style={{ flex: 1 }} />
             )}
-            {takenPhoto === "" ? (
+            {takenPhoto === '' ? (
                 <Actions>
-                    <View>
-                        <Slider 
+                    {/* <View>
+                        <Slider
                             style={{ width: 200, height: 20 }}
                             value={zoom}
                             minimumValue={0}
@@ -159,32 +159,15 @@ export default function TakePhoto({ navigation }) {
                             maximumTrackTintColor="rgba(255, 255, 255, 0.5)"
                             onValueChange={onZoomValueChange}
                         />
-                    </View>
+                    </View> */}
                     <ButtonsContainer>
-                        <TakePhotoBtn onPress={takePhoto}/>
+                        <TakePhotoBtn onPress={takePhoto} />
                         <ActionsContainer>
-                            <TouchableOpacity
-                                onPress={onFlashChange}
-                                style={{ marginRight: 30 }}
-                            >
-                                <Ionicons 
-                                    size={30}
-                                    color="white"
-                                    name="ios-flash-outline"
-                                />
+                            <TouchableOpacity onPress={onFlashChange} style={{ marginRight: 30 }}>
+                                <Ionicons size={30} color="white" name="ios-flash-outline" />
                             </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={onCameraSwitch}
-                            >
-                                <Ionicons 
-                                    size={30}
-                                    color="white"
-                                    name={
-                                        cameraType === Camera.Constants.Type.front
-                                            ? "camera-reverse"
-                                            : "camera"
-                                    }
-                                />
+                            <TouchableOpacity onPress={onCameraSwitch}>
+                                <Ionicons size={30} color="white" name={cameraType === Camera.Constants.Type.front ? 'camera-reverse' : 'camera'} />
                             </TouchableOpacity>
                         </ActionsContainer>
                     </ButtonsContainer>
@@ -192,10 +175,10 @@ export default function TakePhoto({ navigation }) {
             ) : (
                 <PhotoActions>
                     <PhotoAction onPress={onDismiss}>
-                        <Text>Dismiss</Text>
+                        <Text>다시 찍기</Text>
                     </PhotoAction>
                     <PhotoAction onPress={onUpload}>
-                        <Text>Upload</Text>
+                        <Text>분석하기</Text>
                     </PhotoAction>
                 </PhotoActions>
             )}

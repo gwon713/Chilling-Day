@@ -3,6 +3,7 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import Home from 'screens/Home';
 import Community from 'screens/Community';
+import COLORS from 'constants/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,8 +19,11 @@ export default function TabsNav() {
                     } else if (route.name === 'Community') {
                         iconName = focused ? 'ios-chatbubbles' : 'ios-chatbubbles-outline';
                     }
+
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
+                tabBarActiveTintColor: COLORS.MAIN,
+                tabBarInactiveTintColor: 'gray',
             })}>
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Community" component={Community} />

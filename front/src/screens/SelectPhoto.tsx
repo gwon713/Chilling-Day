@@ -1,4 +1,3 @@
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, Image } from 'react-native';
@@ -11,9 +10,9 @@ const Container = styled.View`
 `;
 
 export default function SelectPhoto({ navigation }) {
-    const [ ok, setOk ] = useState(false);
-    const [ photo, setPhoto ] = useState(null);
-    const [ photoUri, setPhotoUri ] = useState("");
+    const [ok, setOk] = useState(false);
+    const [photo, setPhoto] = useState(null);
+    const [photoUri, setPhotoUri] = useState('');
 
     const getPhotos = async () => {
         const { assets: photos } = await MediaLibrary.getAssetsAsync();
@@ -21,17 +20,14 @@ export default function SelectPhoto({ navigation }) {
         setPhotoUri(photos[0]?.uri);
     };
     const getPermissions = async () => {
-        const {
-            accessPrivileges,
-            canAskAgain,
-        } = await MediaLibrary.getPermissionsAsync();
-        if(accessPrivileges === "none" && canAskAgain){
+        const { accessPrivileges, canAskAgain } = await MediaLibrary.getPermissionsAsync();
+        if (accessPrivileges === 'none' && canAskAgain) {
             const { accessPrivileges } = await MediaLibrary.requestPermissionsAsync();
-            if(accessPrivileges !== "none"){
+            if (accessPrivileges !== 'none') {
                 setOk(true);
                 getPhotos();
             }
-        } else if(accessPrivileges !== "none"){
+        } else if (accessPrivileges !== 'none') {
             setOk(true);
             getPhotos();
         }
@@ -39,10 +35,11 @@ export default function SelectPhoto({ navigation }) {
 
     const HeaderRight = () => (
         <TouchableOpacity
-            onPress={() => navigation.navigate("UploadForm", {
-                file: photoUri,
-            })}
-        >
+            onPress={() =>
+                navigation.navigate('UploadForm', {
+                    file: photoUri,
+                })
+            }>
             <Text>Next</Text>
         </TouchableOpacity>
     );
@@ -50,20 +47,12 @@ export default function SelectPhoto({ navigation }) {
     useEffect(() => {
         getPermissions();
     }, []);
+
     useEffect(() => {
         navigation.setOptions({
             headerRight: HeaderRight,
         });
     }, [photoUri]);
-    
-    return (
-        <Container>
-            {photoUri !== "" ? (
-                <Image 
-                    source={{ uri: photoUri }}
-                    style={{ height: "100%" }}
-                />
-            ) : null}
-        </Container>
-    );
+
+    return <Container>{photoUri !== '' ? <Image source={{ uri: photoUri }} style={{ height: '100%' }} /> : null}</Container>;
 }

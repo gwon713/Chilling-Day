@@ -12,6 +12,7 @@ import TakePhoto from './TakePhoto';
 import SelectPhoto from './SelectPhoto';
 import UploadForm from './UploadForm';
 import AddRecipe from './AddRecipe';
+import Result from './Result';
 
 const TopContainer = styled.View`
     display: flex;
@@ -74,6 +75,7 @@ export default function Home() {
             <Stack.Screen name="Select" options={{ title: 'Choose a photo', headerShown: false }} component={SelectPhoto} />
             <Stack.Screen name="UploadForm" options={{ headerShown: false }} component={UploadForm} />
             <Stack.Screen name="AddRecipe" options={{ headerShown: false }} component={AddRecipe} />
+            <Stack.Screen name="Result" options={{ headerShown: false }} component={Result} />
         </Stack.Navigator>
     );
 }

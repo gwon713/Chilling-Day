@@ -3,14 +3,11 @@ import { GrayText, HighlightText, StrongText } from 'components/commons/Text';
 import ScreenLayout from 'components/ScreenLayout';
 import CONFIG from 'constants/config';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useMemo, useState } from 'react';
-import { StyleSheet, Text, Image, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image } from 'react-native';
 import { getIngredientStore } from 'stores/IngredientStore';
 import { getUserStore } from 'stores/UserStore';
 import styled from 'styled-components/native';
-import { FlatGrid } from 'react-native-super-grid';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import AddIngredientModal from 'components/addRecipe/AddIngredientModal';
 import { getTempStore } from 'stores/TempStore';
 import COLORS from 'constants/colors';
 import { useNavigation } from '@react-navigation/core';
@@ -45,23 +42,15 @@ const GoNextButton = styled.TouchableOpacity`
     border-radius: 200px;
 `;
 
-const AddRecipe = observer(() => {
+const Result = observer(() => {
     const navigation = useNavigation();
     const { username, totalChillingDay } = getUserStore();
     const { photoUrl } = getTempStore();
     const { getIngredients } = getIngredientStore();
-    const [modalVisible, setModalVisible] = useState(false);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
 
-    const openModal = () => {
-        setModalVisible(true);
-    };
-    const closeModal = () => {
-        setModalVisible(false);
-    };
-
     const handleGoNextPress = () => {
-        navigation.navigate('Result');
+        // navigation.navigate();
     };
 
     useEffect(() => {
@@ -85,34 +74,11 @@ const AddRecipe = observer(() => {
                 <Image style={{ width: 300, height: 217, borderRadius: 10 }} source={{ uri: photoUrl, cache: 'only-if-cached' }} />
             </ImageContainer>
 
-            <StrongText style={{ width: 300 }}>주성분</StrongText>
-            <FlatGrid
-                itemDimension={90}
-                spacing={0}
-                data={[null, ...selectedIngredients]}
-                style={styles.gridView}
-                renderItem={({ item }) => {
-                    if (!item) {
-                        return (
-                            <TouchableOpacity style={[styles.itemContainer, { backgroundColor: '#E0E0E0' }]} onPress={openModal} key={0}>
-                                <Text style={styles.itemName}>+</Text>
-                            </TouchableOpacity>
-                        );
-                    }
+            <StrongText style={{ width: 300 }}>환경기여도</StrongText>
+            <HighlightText style={{ width: 300, textAlign: 'center', fontSize: 80 }}>36%</HighlightText>
 
-                    return (
-                        <View style={[styles.itemContainer, { backgroundColor: '#FAFAFA' }]} key={item.id}>
-                            <Text style={styles.itemName}>{item.name}</Text>
-                        </View>
-                    );
-                }}
-            />
-            <AddIngredientModal
-                modalVisible={modalVisible}
-                closeModal={closeModal}
-                selectedIngredients={selectedIngredients}
-                setSelectedIngredients={setSelectedIngredients}
-            />
+            <Divider />
+
             <GoNextButtonContainer>
                 <GoNextButton onPress={handleGoNextPress}>
                     <StrongText>
@@ -124,24 +90,4 @@ const AddRecipe = observer(() => {
     );
 });
 
-export default AddRecipe;
-
-const styles = StyleSheet.create({
-    gridView: {
-        width: 300,
-    },
-    itemContainer: {
-        borderRadius: 5,
-        width: 90,
-        height: 90,
-        justifyContent: 'center',
-        alignContent: 'center',
-        marginTop: 10,
-    },
-    itemName: {
-        fontSize: 16,
-        color: '#8A8A8A',
-        fontWeight: '600',
-        textAlign: 'center',
-    },
-});
+export default Result;
