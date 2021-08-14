@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const { env } = require('./config/env');
+const { env } = require('./env');
 
 const connection = { //database 접속 정보 입력
     host: env.database.host,
