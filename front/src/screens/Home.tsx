@@ -1,5 +1,5 @@
 import ProgressCircle from 'components/home/ProgressCircle';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Text } from 'react-native';
 import styled from 'styled-components/native';
 import ScreenLayout from 'components/ScreenLayout';
@@ -8,6 +8,9 @@ import { GrayText, HighlightText, StrongText } from 'components/commons/Text';
 import { getUserStore } from 'stores/UserStore';
 import { getTreeStore } from 'stores/TreeStore';
 import { observer } from 'mobx-react-lite';
+import { createStackNavigator } from '@react-navigation/stack';
+import TakePhoto from './TakePhoto';
+import SelectPhoto from './SelectPhoto';
 
 const TopContainer = styled.View`
     display: flex;
@@ -24,16 +27,10 @@ const BottomContainer = styled.View`
     align-items: center;
 `;
 
-const Home = observer(() => {
-    const { userId, username } = getUserStore();
-    const { getTreeInfo, treeProgress, remainingDaysForComplete } = getTreeStore();
+const HomeScreen = observer(() => {
+    const { username } = getUserStore();
+    const { treeProgress, remainingDaysForComplete } = getTreeStore();
     const isChillingDay = true;
-
-    useEffect(() => {
-        if (userId) {
-            getTreeInfo(userId);
-        }
-    }, [getTreeInfo, userId]);
 
     return (
         <ScreenLayout>
@@ -57,4 +54,14 @@ const Home = observer(() => {
     );
 });
 
-export default Home;
+export default function Home() {
+    const Stack = createStackNavigator();
+
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Home" options={{ headerShown: false }} component={HomeScreen} />
+            <Stack.Screen name="Take" options={{ headerShown: false }} component={TakePhoto} />
+            <Stack.Screen name="Select" options={{ title: 'Choose a photo', headerShown: false }} component={SelectPhoto} />
+        </Stack.Navigator>
+    );
+}

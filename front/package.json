@@ -19,6 +19,8 @@
         "axios": "^0.21.1",
         "expo": "~42.0.1",
         "expo-app-loading": "^1.1.2",
+        "expo-camera": "^11.2.2",
+        "expo-media-library": "^12.1.2",
         "expo-status-bar": "~1.0.4",
         "lodash": "^4.17.21",
         "mobx": "^6.3.2",

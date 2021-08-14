@@ -3,6 +3,10 @@ import COLORS from 'constants/colors';
 import React from 'react';
 import { Modal, Text, View } from 'react-native';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import SelectPhoto from 'screens/SelectPhoto';
+import TakePhoto from 'screens/TakePhoto';
 
 const ModalContainer = styled.View`
     flex: 1;
@@ -43,9 +47,14 @@ const CloseButtonContainer = styled.View`
 `;
 const CloseButton = styled.TouchableNativeFeedback``;
 
-export default function CameraSelectModal({ modalVisible, closeModal }) {
-    const handleCameraPress = () => {};
-    const handleCameraRollPress = () => {};
+export default function CameraSelectModal({ modalVisible, closeModal, navigation }) {
+    // const navigation = useNavigation();
+    const handleCameraPress = () => {
+        navigation.navigate('Take');
+    };
+    const handleCameraRollPress = () => {
+        navigation.navigate('Select');
+    };
 
     return (
         <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={closeModal}>

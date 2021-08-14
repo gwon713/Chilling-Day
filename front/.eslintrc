@@ -19,7 +19,7 @@
         "SharedArrayBuffer": "readonly"
     },
     "rules": {
-        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/no-unused-vars": "off",
         "no-unused-expressions": 0,
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "react-native/no-unused-styles": 2,
