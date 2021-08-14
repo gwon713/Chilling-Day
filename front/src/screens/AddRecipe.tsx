@@ -70,14 +70,14 @@ const AddRecipe = observer(() => {
                 renderItem={({ item }) => {
                     if (!item) {
                         return (
-                            <TouchableOpacity style={[styles.itemContainer, { backgroundColor: '#E0E0E0' }]} onPress={openModal}>
+                            <TouchableOpacity style={[styles.itemContainer, { backgroundColor: '#E0E0E0' }]} onPress={openModal} key={0}>
                                 <Text style={styles.itemName}>+</Text>
                             </TouchableOpacity>
                         );
                     }
 
                     return (
-                        <View style={[styles.itemContainer, { backgroundColor: '#FAFAFA' }]}>
+                        <View style={[styles.itemContainer, { backgroundColor: '#FAFAFA' }]} key={item.id}>
                             <Text style={styles.itemName}>{item.name}</Text>
                         </View>
                     );

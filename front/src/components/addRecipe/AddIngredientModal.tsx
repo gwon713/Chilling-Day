@@ -1,5 +1,5 @@
 import Divider from 'components/commons/Divider';
-import { GrayText, StrongText } from 'components/commons/Text';
+import { StrongText } from 'components/commons/Text';
 import React from 'react';
 import { Modal, Text, View, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -26,14 +26,15 @@ export default function AddIngredientModal({ modalVisible, closeModal, selectedI
     const { ingredients } = getIngredientStore();
 
     const handleIngredientClick = (ingredient) => () => {
+        console.log(ingredient);
         setSelectedIngredients((ingredients) => [...ingredients, ingredient]);
         closeModal();
     };
 
     return (
-        <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={closeModal} presentationStyle="pageSheet">
+        <Modal animationType="slide" visible={modalVisible} onRequestClose={closeModal} presentationStyle="pageSheet">
             <ModalContentContainer>
-                <View style={{ display: 'flex', justifyContent: 'center' }}>
+                <View style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
                     <StrongText style={{ textAlign: 'center' }}>주성분 추가</StrongText>
                     <CloseButtonContainer>
                         <CloseButton onPress={closeModal}>
@@ -41,13 +42,13 @@ export default function AddIngredientModal({ modalVisible, closeModal, selectedI
                         </CloseButton>
                     </CloseButtonContainer>
                 </View>
-                <ScrollView>
+                <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                     {ingredients.map((ingredient) => {
                         const isAlreadySelected = selectedIngredients.some(({ name }) => name === ingredient.name);
 
                         if (isAlreadySelected) {
                             return (
-                                <>
+                                <React.Fragment key={ingredient.id}>
                                     <Text
                                         style={{
                                             textAlign: 'center',
@@ -58,17 +59,17 @@ export default function AddIngredientModal({ modalVisible, closeModal, selectedI
                                         {ingredient.name}
                                     </Text>
                                     <Divider />
-                                </>
+                                </React.Fragment>
                             );
                         }
 
                         return (
-                            <>
+                            <React.Fragment key={ingredient.id}>
                                 <TouchableOpacity style={{ marginTop: 16, marginBottom: 16 }} onPress={handleIngredientClick(ingredient)}>
                                     <Text style={{ textAlign: 'center' }}>{ingredient.name}</Text>
                                 </TouchableOpacity>
                                 <Divider />
-                            </>
+                            </React.Fragment>
                         );
                     })}
                 </ScrollView>
