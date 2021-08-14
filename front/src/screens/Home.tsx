@@ -1,60 +1,48 @@
-import React, { useState } from 'react';
-import { Modal, View, Text } from 'react-native';
+import ProgressCircle from 'components/home/ProgressCircle';
+import React from 'react';
+import { Text } from 'react-native';
 import styled from 'styled-components/native';
 import ScreenLayout from 'components/ScreenLayout';
+import ChillingButton from 'components/home/ChillingButton';
+import { GrayText, HighlightText, StrongText } from 'components/commons/Text';
 
-const Chillbutton = styled.TouchableOpacity`
-    border-radius: 50px;
-    border: 2px solid black;
-    padding: 10px 20px;
+const TopContainer = styled.View`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+const ProgressCircleContainer = styled.View`
+    margin-top: 50px;
+    margin-bottom: 20px;
+`;
+const BottomContainer = styled.View`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 export default function Home() {
-    const [modalVisible, setModalVisible] = useState(false);
-
-    const takePhotoBtnClick = () => {};
-    const albumBtnClick = () => {};
+    const username = '박상혁';
+    const isChillingDay = true;
 
     return (
         <ScreenLayout>
-            <Text>Set Chilling Day</Text>
-
-            <Chillbutton onPress={() => setModalVisible(!modalVisible)}>
-                <Text>Chill</Text>
-            </Chillbutton>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    // modal has been closed
-                    setModalVisible(!modalVisible);
-                }}>
-                <View
-                    style={{
-                        flex: 0.4,
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <View
-                        style={{
-                            flex: 0.3,
-                            flexDirection: 'row',
-                        }}>
-                        <Text>Chilling 방법 선택</Text>
-                        <Chillbutton onPress={() => setModalVisible(!modalVisible)}>
-                            <Text>Hide Modal</Text>
-                        </Chillbutton>
-                    </View>
-                    <Chillbutton onPress={() => takePhotoBtnClick}>
-                        <Text>직접 사진촬영</Text>
-                    </Chillbutton>
-                    <Chillbutton onPress={() => albumBtnClick}>
-                        <Text>앨범에서 선택</Text>
-                    </Chillbutton>
-                </View>
-            </Modal>
+            <TopContainer>
+                <GrayText>안녕하세요 {username}님</GrayText>
+                {isChillingDay && (
+                    <StrongText>
+                        오늘은 <HighlightText>칠링데이</HighlightText>입니다!
+                    </StrongText>
+                )}
+            </TopContainer>
+            <ProgressCircleContainer>
+                <ProgressCircle percent={80} />
+            </ProgressCircleContainer>
+            <BottomContainer>
+                <Text>나무 1그루까지</Text>
+                <StrongText>6 days</StrongText>
+                <ChillingButton />
+            </BottomContainer>
         </ScreenLayout>
     );
 }
