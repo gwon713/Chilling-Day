@@ -2,15 +2,14 @@ import { observable } from 'mobx';
 import memoize from 'lodash/memoize';
 import getIngredients from 'apis/getIngredients';
 
+type Ingredient = {
+    id: number;
+    name: string;
+    size: number;
+    emissions: number;
+};
 const createIngredientStore = () => {
-    const $ingredients = observable.box<
-        {
-            id: number;
-            name: string;
-            size: number;
-            emissions: number;
-        }[]
-    >([]);
+    const $ingredients = observable.box<Ingredient[]>([]);
 
     const $public = observable({
         async getIngredients() {
@@ -24,6 +23,10 @@ const createIngredientStore = () => {
             }));
 
             $ingredients.set(ingredients);
+        },
+
+        get ingredients(): Ingredient[] {
+            return $ingredients.get();
         },
     });
 

@@ -3,13 +3,14 @@ import { GrayText, StrongText } from 'components/commons/Text';
 import ScreenLayout from 'components/ScreenLayout';
 import CONFIG from 'constants/config';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { StyleSheet, Text, Image, View } from 'react-native';
 import { getIngredientStore } from 'stores/IngredientStore';
 import { getUserStore } from 'stores/UserStore';
 import styled from 'styled-components/native';
 import { FlatGrid } from 'react-native-super-grid';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import AddIngredientModal from 'components/addRecipe/AddIngredientModal';
 
 const TopContainer = styled.View`
     margin-top: 20px;
@@ -26,13 +27,22 @@ const ImageContainer = styled.View`
 const AddRecipe = observer(() => {
     const { username, totalChillingDay } = getUserStore();
     const { getIngredients } = getIngredientStore();
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedIngredients, setSelectedIngredients] = useState([]);
+
+    const openModal = () => {
+        setModalVisible(true);
+    };
+    const closeModal = () => {
+        setModalVisible(false);
+    };
 
     useEffect(() => {
         getIngredients();
     }, [getIngredients]);
 
-    const selectedIngredients = useMemo(() => {
-        return [{}, { id: 3, name: '치즈', size: 1, emissions: 0.021 }];
+    useEffect(() => {
+        setSelectedIngredients([...selectedIngredients, { id: 3, name: '치즈', size: 1, emissions: 0.021 }]);
     }, []);
 
     return (
@@ -55,12 +65,12 @@ const AddRecipe = observer(() => {
             <FlatGrid
                 itemDimension={90}
                 spacing={0}
-                data={selectedIngredients}
+                data={[null, ...selectedIngredients]}
                 style={styles.gridView}
                 renderItem={({ item }) => {
-                    if (!item.name) {
+                    if (!item) {
                         return (
-                            <TouchableOpacity style={[styles.itemContainer, { backgroundColor: '#E0E0E0' }]}>
+                            <TouchableOpacity style={[styles.itemContainer, { backgroundColor: '#E0E0E0' }]} onPress={openModal}>
                                 <Text style={styles.itemName}>+</Text>
                             </TouchableOpacity>
                         );
@@ -72,6 +82,12 @@ const AddRecipe = observer(() => {
                         </View>
                     );
                 }}
+            />
+            <AddIngredientModal
+                modalVisible={modalVisible}
+                closeModal={closeModal}
+                selectedIngredients={selectedIngredients}
+                setSelectedIngredients={setSelectedIngredients}
             />
         </ScreenLayout>
     );
