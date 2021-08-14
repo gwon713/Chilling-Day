@@ -6,7 +6,7 @@ import COLORS from 'constants/colors';
 import { Text } from 'react-native';
 
 const Icon = styled.Text`
-    font-size: 80;
+    font-size: 80px;
 `;
 
 interface ProgressCircleProps {

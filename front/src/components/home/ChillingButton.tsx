@@ -3,24 +3,26 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import CameraSelectModal from './CameraSelectModal';
 
+const ChillButtonText = styled.Text`
+    font-weight: 700;
+    color: ${({ disabled }: { disabled: boolean }) => (disabled ? '#FFFFFF' : COLORS.MAIN)};
+`;
+
 const ChillButtonContainer = styled.TouchableOpacity`
     margin-top: 20px;
     width: 160px;
     height: 44px;
-    background-color: white;
-    border: 1px solid ${COLORS.MAIN};
+    background-color: ${({ disabled }) => (disabled ? '#EAEAEA' : '#FFFFFF')};
+    border: 1px solid ${({ disabled }) => (disabled ? '#EAEAEA' : COLORS.MAIN)};
+
     border-radius: 200px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 `;
-const ChillButtonText = styled.Text`
-    font-weight: 700;
-    color: ${COLORS.MAIN};
-`;
 
-export default function ChillingButton({ navigation }) {
+export default function ChillingButton({ navigation, disabled }) {
     const [modalVisible, setModalVisible] = useState(false);
 
     const openModal = () => {
@@ -32,8 +34,8 @@ export default function ChillingButton({ navigation }) {
 
     return (
         <>
-            <ChillButtonContainer onPress={openModal}>
-                <ChillButtonText>Chill</ChillButtonText>
+            <ChillButtonContainer onPress={openModal} disabled={disabled}>
+                <ChillButtonText disabled={disabled}>Chill</ChillButtonText>
             </ChillButtonContainer>
             <CameraSelectModal modalVisible={modalVisible} closeModal={closeModal} navigation={navigation} />
         </>

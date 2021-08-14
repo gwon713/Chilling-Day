@@ -26,19 +26,25 @@ const BottomContainer = styled.View`
     flex-direction: column;
     align-items: center;
 `;
+const RemainingDaysForCompleteContainer = styled.View`
+    opacity: ${({ hidden }: { hidden: boolean }) => (hidden ? 0 : 1)};
+`;
 
 function HomeScreen({ navigation }) {
-    const { username } = getUserStore();
+    const { username, isChillingDay, remainingDaysUntilChilling } = getUserStore();
     const { treeProgress, remainingDaysForComplete } = getTreeStore();
-    const isChillingDay = true;
 
     return (
         <ScreenLayout>
             <TopContainer>
                 <GrayText>안녕하세요 {username}님</GrayText>
-                {isChillingDay && (
+                {isChillingDay ? (
                     <StrongText>
                         오늘은 <HighlightText>칠링데이</HighlightText>입니다!
+                    </StrongText>
+                ) : (
+                    <StrongText>
+                        칠링데이까지 <HighlightText>{remainingDaysUntilChilling}</HighlightText>일 남았습니다.
                     </StrongText>
                 )}
             </TopContainer>
@@ -46,9 +52,12 @@ function HomeScreen({ navigation }) {
                 <ProgressCircle percent={treeProgress} />
             </ProgressCircleContainer>
             <BottomContainer>
-                <Text>나무 1그루까지</Text>
-                <StrongText>{remainingDaysForComplete} days</StrongText>
-                <ChillingButton navigation={navigation} />
+                <RemainingDaysForCompleteContainer hidden={!isChillingDay}>
+                    <Text>나무 1그루까지</Text>
+                    <StrongText>{remainingDaysForComplete} days</StrongText>
+                </RemainingDaysForCompleteContainer>
+                <ChillingButton navigation={navigation} disabled={!isChillingDay} />
+                {!isChillingDay ? <GrayText>Chilling day 재설정</GrayText> : null}
             </BottomContainer>
         </ScreenLayout>
     );

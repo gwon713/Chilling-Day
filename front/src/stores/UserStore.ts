@@ -1,6 +1,7 @@
 import { observable } from 'mobx';
 import memoize from 'lodash/memoize';
 import getUserInfo from 'apis/getUserInfo';
+import { getDay } from 'date-fns';
 
 const createTreeStore = () => {
     const $user = observable.box<{
@@ -58,6 +59,36 @@ const createTreeStore = () => {
 
         get username() {
             return $user.get().username;
+        },
+
+        get isChillingDay() {
+            const chillingDays = $user.get().chillingDays;
+            const day = getDay(new Date());
+
+            return chillingDays[day];
+        },
+
+        get remainingDaysUntilChilling() {
+            const chillingDays = $user.get().chillingDays;
+            const day = getDay(new Date());
+
+            let remainingDays = 0;
+            let index = day;
+
+            while (1) {
+                if (chillingDays[index % chillingDays.length]) {
+                    break;
+                }
+
+                index += 1;
+                remainingDays += 1;
+
+                if (remainingDays >= 100) {
+                    break;
+                }
+            }
+
+            return remainingDays;
         },
     });
 
