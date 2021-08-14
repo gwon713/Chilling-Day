@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlexAlignType, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 
 interface ScreenLayoutProps {
     alignItems?: FlexAlignType;
@@ -17,6 +18,7 @@ export default function ScreenLayout({ alignItems = 'center', justifyContent = '
                 justifyContent,
             }}>
             {children}
+            <StatusBar style="auto" />
         </View>
     );
 }
