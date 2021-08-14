@@ -61,6 +61,10 @@ const createTreeStore = () => {
             return $user.get().username;
         },
 
+        get totalChillingDay() {
+            return $user.get().totalChillingDay;
+        },
+
         get isChillingDay() {
             const chillingDays = $user.get().chillingDays;
             const day = getDay(new Date());
