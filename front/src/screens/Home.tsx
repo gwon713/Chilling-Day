@@ -1,14 +1,61 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+/* eslint-disable  */
+import ScreenLayout from '../components/ScreenLayout';
+import React, { useState } from 'react';
+import { Modal, View, Text } from 'react-native';
+import styled from 'styled-components/native';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const Chillbutton = styled.TouchableOpacity`
+    border-radius: 50px;
+    border: 2px solid black;
+    padding: 10px 20px;
+`;
+
 export default function Home({ navigation }) {
-    const username = '박상혁';
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const takePhotoBtnClick = () => {};
+    const albumBtnClick = () => {};
 
     return (
-        <View>
-            <Text>안녕하세요 {username}님</Text>
-            <Text>오늘은 칠링데이입니다.</Text>
-        </View>
+        <ScreenLayout>
+            <Text>Set Chilling Day</Text>
+
+            <Chillbutton onPress={() => setModalVisible(!modalVisible)}>
+                <Text>Chill</Text>
+            </Chillbutton>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    // modal has been closed
+                    setModalVisible(!modalVisible);
+                }}>
+                <View
+                    style={{
+                        flex: 0.4,
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                    <View
+                        style={{
+                            flex: 0.3,
+                            flexDirection: 'row',
+                        }}>
+                        <Text>Chilling 방법 선택</Text>
+                        <Chillbutton onPress={() => setModalVisible(!modalVisible)}>
+                            <Text>Hide Modal</Text>
+                        </Chillbutton>
+                    </View>
+                    <Chillbutton onPress={() => takePhotoBtnClick}>
+                        <Text>직접 사진촬영</Text>
+                    </Chillbutton>
+                    <Chillbutton onPress={() => albumBtnClick}>
+                        <Text>앨범에서 선택</Text>
+                    </Chillbutton>
+                </View>
+            </Modal>
+        </ScreenLayout>
     );
 }
