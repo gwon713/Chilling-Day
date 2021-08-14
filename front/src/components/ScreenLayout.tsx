@@ -1,15 +1,20 @@
 import React from 'react';
-import { View } from 'react-native';
+import { FlexAlignType, View } from 'react-native';
 
-export default function ScreenLayout({ children }) {
+interface ScreenLayoutProps {
+    alignItems?: FlexAlignType;
+    justifyContent?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
+    children: React.ReactNode;
+}
+
+export default function ScreenLayout({ alignItems = 'center', justifyContent = 'center', children }: ScreenLayoutProps) {
     return (
         <View
-            // eslint-disable-next-line react-native/no-color-literals
             style={{
                 backgroundColor: 'white',
                 flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
+                alignItems,
+                justifyContent,
             }}>
             {children}
         </View>
