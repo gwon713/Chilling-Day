@@ -1,9 +1,8 @@
 import Divider from 'components/commons/Divider';
 import { GrayText, HighlightText, StrongText } from 'components/commons/Text';
 import ScreenLayout from 'components/ScreenLayout';
-import CONFIG from 'constants/config';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, Image, View } from 'react-native';
 import { getIngredientStore } from 'stores/IngredientStore';
 import { getUserStore } from 'stores/UserStore';
@@ -69,7 +68,33 @@ const AddRecipe = observer(() => {
     }, [getIngredients]);
 
     useEffect(() => {
-        setSelectedIngredients([...selectedIngredients, { id: 3, name: '치즈', size: 1, emissions: 0.021 }]);
+        setSelectedIngredients([
+            ...selectedIngredients,
+            {
+                id: 3,
+                name: '치즈',
+                size: 1,
+                emissions: 0.021,
+            },
+            {
+                id: 6,
+                name: '닭고기',
+                size: 1,
+                emissions: 0.0061,
+            },
+            {
+                id: 8,
+                name: '달걀',
+                size: 1,
+                emissions: 0.0045,
+            },
+            {
+                id: 14,
+                name: '채소',
+                size: 1,
+                emissions: 0.0001,
+            },
+        ]);
     }, []);
 
     return (

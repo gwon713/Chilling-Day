@@ -1,10 +1,9 @@
 import Divider from 'components/commons/Divider';
 import { GrayText, HighlightText, StrongText } from 'components/commons/Text';
 import ScreenLayout from 'components/ScreenLayout';
-import CONFIG from 'constants/config';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
-import { Image } from 'react-native';
+import { Image, Text } from 'react-native';
 import { getIngredientStore } from 'stores/IngredientStore';
 import { getUserStore } from 'stores/UserStore';
 import styled from 'styled-components/native';
@@ -22,6 +21,10 @@ const TopContainer = styled.View`
 const ImageContainer = styled.View`
     margin-top: 25px;
     margin-bottom: 25px;
+`;
+
+const BottomContainer = styled.View`
+    margin-top: 30px;
 `;
 
 const GoNextButtonContainer = styled.View`
@@ -75,9 +78,11 @@ const Result = observer(() => {
             </ImageContainer>
 
             <StrongText style={{ width: 300 }}>환경기여도</StrongText>
-            <HighlightText style={{ width: 300, textAlign: 'center', fontSize: 80 }}>36%</HighlightText>
 
-            <Divider />
+            <BottomContainer>
+                <HighlightText style={{ width: 300, textAlign: 'center', fontSize: 80 }}>37%</HighlightText>
+                <Text style={{ width: 300, textAlign: 'center' }}>의 탄소 절감을 달성했습니다. 🥳</Text>
+            </BottomContainer>
 
             <GoNextButtonContainer>
                 <GoNextButton onPress={handleGoNextPress}>
