@@ -5,6 +5,9 @@ import styled from 'styled-components/native';
 import ScreenLayout from 'components/ScreenLayout';
 import ChillingButton from 'components/home/ChillingButton';
 import { GrayText, HighlightText, StrongText } from 'components/commons/Text';
+import { getUserStore } from 'stores/UserStore';
+import { getTreeStore } from 'stores/TreeStore';
+import { observer } from 'mobx-react-lite';
 import { createStackNavigator } from '@react-navigation/stack';
 import TakePhoto from './TakePhoto';
 import SelectPhoto from './SelectPhoto';
@@ -24,27 +27,38 @@ const BottomContainer = styled.View`
     flex-direction: column;
     align-items: center;
 `;
+const RemainingDaysForCompleteContainer = styled.View`
+    opacity: ${({ hidden }: { hidden: boolean }) => (hidden ? 0 : 1)};
+`;
 
-function HomeScreen({ navigation }){
-    const username = '박상혁';
-    const isChillingDay = true;
+function HomeScreen({ navigation }) {
+    const { username, isChillingDay, remainingDaysUntilChilling } = getUserStore();
+    const { treeProgress, remainingDaysForComplete } = getTreeStore();
+
     return (
         <ScreenLayout>
             <TopContainer>
                 <GrayText>안녕하세요 {username}님</GrayText>
-                {isChillingDay && (
+                {isChillingDay ? (
                     <StrongText>
                         오늘은 <HighlightText>칠링데이</HighlightText>입니다!
+                    </StrongText>
+                ) : (
+                    <StrongText>
+                        칠링데이까지 <HighlightText>{remainingDaysUntilChilling}</HighlightText>일 남았습니다.
                     </StrongText>
                 )}
             </TopContainer>
             <ProgressCircleContainer>
-                <ProgressCircle percent={80} />
+                <ProgressCircle percent={treeProgress} />
             </ProgressCircleContainer>
             <BottomContainer>
-                <Text>나무 1그루까지</Text>
-                <StrongText>6 days</StrongText>
-                <ChillingButton navigation={navigation}/>
+                <RemainingDaysForCompleteContainer hidden={!isChillingDay}>
+                    <Text>나무 1그루까지</Text>
+                    <StrongText>{remainingDaysForComplete} days</StrongText>
+                </RemainingDaysForCompleteContainer>
+                <ChillingButton navigation={navigation} disabled={!isChillingDay} />
+                {!isChillingDay ? <GrayText>Chilling day 재설정</GrayText> : null}
             </BottomContainer>
         </ScreenLayout>
     );
@@ -76,6 +90,5 @@ export default function Home() {
                 component={UploadForm}
             />
         </Stack.Navigator>
-        
     );
 }
