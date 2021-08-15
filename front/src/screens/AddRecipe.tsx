@@ -1,9 +1,8 @@
 import Divider from 'components/commons/Divider';
 import { GrayText, HighlightText, StrongText } from 'components/commons/Text';
 import ScreenLayout from 'components/ScreenLayout';
-import CONFIG from 'constants/config';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, Image, View } from 'react-native';
 import { getIngredientStore } from 'stores/IngredientStore';
 import { getUserStore } from 'stores/UserStore';
@@ -16,8 +15,8 @@ import COLORS from 'constants/colors';
 import { useNavigation } from '@react-navigation/core';
 
 const TopContainer = styled.View`
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
 `;
@@ -69,7 +68,33 @@ const AddRecipe = observer(() => {
     }, [getIngredients]);
 
     useEffect(() => {
-        setSelectedIngredients([...selectedIngredients, { id: 3, name: '치즈', size: 1, emissions: 0.021 }]);
+        setSelectedIngredients([
+            ...selectedIngredients,
+            {
+                id: 3,
+                name: '치즈',
+                size: 1,
+                emissions: 0.021,
+            },
+            {
+                id: 6,
+                name: '닭고기',
+                size: 1,
+                emissions: 0.0061,
+            },
+            {
+                id: 8,
+                name: '달걀',
+                size: 1,
+                emissions: 0.0045,
+            },
+            {
+                id: 14,
+                name: '채소',
+                size: 1,
+                emissions: 0.0001,
+            },
+        ]);
     }, []);
 
     return (
@@ -79,7 +104,7 @@ const AddRecipe = observer(() => {
                 <StrongText style={{ textAlign: 'center' }}>{totalChillingDay + 1}번째 Chilling</StrongText>
             </TopContainer>
 
-            <Divider height={2} />
+            {/* <Divider height={2} /> */}
 
             <ImageContainer>
                 <Image style={{ width: 300, height: 217, borderRadius: 10 }} source={{ uri: photoUrl, cache: 'only-if-cached' }} />
