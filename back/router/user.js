@@ -5,13 +5,14 @@ const logger = require('../config/winston');
 
 const router = express.Router();
 
+// GET User Data
 router.get('/user', (req, res)=>{
     /*const sql = "SELECT u.user_id, u.user_name, u.user_email, u.user_pwd, u.user_level, u.user_childay_cnt, ud.chil_day_mon, ud.chil_day_tue, ud.chil_day_wed, ud.chil_day_thu, ud.chil_day_fri, ud.chil_day_sat, ud.chil_day_sun\
                 FROM USER_TB u , USER_CHIL_DAY_TB ud\
                 WHERE u.user_id = ? AND u.user_id = ud.user_id;"*/
     const sql = "SELECT u.*, ud.* \
                 FROM USER_TB u ,USER_CHIL_DAY_TB ud\
-                WHERE u.user_id = 1 AND u.user_id = ud.user_id;"
+                WHERE u.user_id = ? AND u.user_id = ud.user_id;"
     const userID = parseInt(req.query.user_id);
     const params = [userID];
     try {
@@ -22,7 +23,7 @@ router.get('/user', (req, res)=>{
             }
             connection.query(sql, params, (err, result) => {
                 if (err) {
-                    logger.error("GET user Data Error" + err);
+                    logger.error("GET User Data Error" + err);
                     res.status(500).send("message : Internal Server Error");
                 }
                 else {
@@ -62,6 +63,7 @@ router.get('/user', (req, res)=>{
     }
 });
 
+// GET Lading Info
 router.get('/lending', (req, res)=>{
     const sql = "SELECT user_id, user_tree\
                 FROM USER_TB\
