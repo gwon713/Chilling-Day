@@ -13,6 +13,7 @@ import SelectPhoto from './SelectPhoto';
 import UploadForm from './UploadForm';
 import AddRecipe from './AddRecipe';
 import Result from './Result';
+import COLORS from 'constants/colors';
 
 const TopContainer = styled.View`
     display: flex;
@@ -69,7 +70,14 @@ export default function Home() {
     const Stack = createStackNavigator();
 
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+            initialRouteName="Home"
+        // screenOptions={{
+        //     title: 'Chilling Day',
+        //     headerTintColor: COLORS.MAIN,
+        //     headerStyle: { backgroundColor: 'white' }
+        // }}
+        >
             <Stack.Screen name="Home" options={{ headerShown: false }} component={HomeScreen} />
             <Stack.Screen name="Take" options={{ headerShown: false }} component={TakePhoto} />
             <Stack.Screen name="Select" options={{ title: 'Choose a photo', headerShown: false }} component={SelectPhoto} />

@@ -8,6 +8,7 @@ import COLORS from 'constants/colors';
 const Tab = createBottomTabNavigator();
 
 export default function TabsNav() {
+
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -22,11 +23,12 @@ export default function TabsNav() {
 
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
+                title: 'Chilling Day',
                 tabBarActiveTintColor: COLORS.MAIN,
-                tabBarInactiveTintColor: 'gray',
+                tabBarInactiveTintColor: 'white',
             })}>
-            <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Community" component={Community} />
+            <Tab.Screen name="Home" options={{ headerShown: true }} component={Home} />
+            <Tab.Screen name="Community" options={{ headerShown: true }} component={Community} />
         </Tab.Navigator>
     );
 }
