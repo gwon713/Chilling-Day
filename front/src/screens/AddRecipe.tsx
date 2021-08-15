@@ -1,4 +1,3 @@
-import Divider from 'components/commons/Divider';
 import { GrayText, HighlightText, StrongText } from 'components/commons/Text';
 import ScreenLayout from 'components/ScreenLayout';
 import { observer } from 'mobx-react-lite';
@@ -13,6 +12,7 @@ import AddIngredientModal from 'components/addRecipe/AddIngredientModal';
 import { getTempStore } from 'stores/TempStore';
 import COLORS from 'constants/colors';
 import { useNavigation } from '@react-navigation/core';
+import { getEmissionStore } from 'stores/EmissionStore';
 
 const TopContainer = styled.View`
     margin-top: 30px;
@@ -46,9 +46,10 @@ const GoNextButton = styled.TouchableOpacity`
 
 const AddRecipe = observer(() => {
     const navigation = useNavigation();
-    const { username, totalChillingDay } = getUserStore();
+    const { userId, username, totalChillingDay, getUser } = getUserStore();
     const { photoUrl } = getTempStore();
     const { getIngredients } = getIngredientStore();
+    const { getEmission } = getEmissionStore();
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
 
@@ -60,7 +61,11 @@ const AddRecipe = observer(() => {
     };
 
     const handleGoNextPress = () => {
-        navigation.navigate('Result');
+        (async () => {
+            const user = await getUser(userId);
+            getEmission(user.id, selectedIngredients, user.user_childay_cnt);
+            navigation.navigate('Result');
+        })();
     };
 
     useEffect(() => {
@@ -101,10 +106,8 @@ const AddRecipe = observer(() => {
         <ScreenLayout justifyContent="flex-start">
             <TopContainer>
                 <GrayText style={{ textAlign: 'center' }}>{username}님의</GrayText>
-                <StrongText style={{ textAlign: 'center' }}>{totalChillingDay + 1}번째 Chilling</StrongText>
+                <StrongText style={{ textAlign: 'center' }}>{totalChillingDay}번째 Chilling</StrongText>
             </TopContainer>
-
-            {/* <Divider height={2} /> */}
 
             <ImageContainer>
                 <Image style={{ width: 300, height: 217, borderRadius: 10 }} source={{ uri: photoUrl, cache: 'only-if-cached' }} />

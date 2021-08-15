@@ -1,16 +1,14 @@
-import Divider from 'components/commons/Divider';
 import { GrayText, HighlightText, StrongText } from 'components/commons/Text';
 import ScreenLayout from 'components/ScreenLayout';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { Image, Text } from 'react-native';
-import { getIngredientStore } from 'stores/IngredientStore';
 import { getUserStore } from 'stores/UserStore';
 import styled from 'styled-components/native';
 import { getTempStore } from 'stores/TempStore';
 import COLORS from 'constants/colors';
-import { useNavigation } from '@react-navigation/core';
 import { useCountUp } from 'use-count-up';
+import { getEmissionStore } from 'stores/EmissionStore';
 
 const TopContainer = styled.View`
     margin-top: 30px;
@@ -47,34 +45,32 @@ const GoNextButton = styled.TouchableOpacity`
 `;
 
 const Result = observer(() => {
-    const navigation = useNavigation();
     const { username, totalChillingDay } = getUserStore();
     const { photoUrl } = getTempStore();
-    const { getIngredients } = getIngredientStore();
+    const { emissionPercent } = getEmissionStore();
+    const [percent, setPercent] = useState(0);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
-    const { value: percent } = useCountUp({
+    const { value } = useCountUp({
         isCounting: true,
-        end: 37,
+        end: percent,
         duration: 3,
     });
 
-    const handleGoNextPress = () => {
-        // navigation.navigate();
-    };
-
-    useEffect(() => {
-        getIngredients();
-    }, [getIngredients]);
+    const handleGoNextPress = () => {};
 
     useEffect(() => {
         setSelectedIngredients([...selectedIngredients, { id: 3, name: '치즈', size: 1, emissions: 0.021 }]);
     }, []);
 
+    useEffect(() => {
+        setPercent(emissionPercent);
+    }, [emissionPercent]);
+
     return (
         <ScreenLayout justifyContent="flex-start">
             <TopContainer>
                 <GrayText style={{ textAlign: 'center' }}>{username}님의</GrayText>
-                <StrongText style={{ textAlign: 'center' }}>{totalChillingDay + 1}번째 Chilling</StrongText>
+                <StrongText style={{ textAlign: 'center' }}>{totalChillingDay}번째 Chilling</StrongText>
             </TopContainer>
 
             {/* <Divider height={2} /> */}
@@ -86,7 +82,7 @@ const Result = observer(() => {
             <StrongText style={{ width: 300 }}>환경기여도</StrongText>
 
             <BottomContainer>
-                <HighlightText style={{ width: 300, textAlign: 'center', fontSize: 80 }}>{percent}%</HighlightText>
+                <HighlightText style={{ width: 300, textAlign: 'center', fontSize: 80 }}>{value}%</HighlightText>
                 <Text style={{ width: 300, textAlign: 'center' }}>의 탄소 절감을 달성했습니다. 🥳</Text>
             </BottomContainer>
 

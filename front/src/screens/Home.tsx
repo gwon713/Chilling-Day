@@ -1,5 +1,5 @@
 import ProgressCircle from 'components/home/ProgressCircle';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text } from 'react-native';
 import styled from 'styled-components/native';
 import ScreenLayout from 'components/ScreenLayout';
@@ -13,7 +13,7 @@ import SelectPhoto from './SelectPhoto';
 import UploadForm from './UploadForm';
 import AddRecipe from './AddRecipe';
 import Result from './Result';
-import COLORS from 'constants/colors';
+import { observer } from 'mobx-react-lite';
 
 const TopContainer = styled.View`
     display: flex;
@@ -33,9 +33,16 @@ const RemainingDaysForCompleteContainer = styled.View`
     opacity: ${({ hidden }: { hidden: boolean }) => (hidden ? 0 : 1)};
 `;
 
-function HomeScreen({ navigation }) {
-    const { username, isChillingDay, remainingDaysUntilChilling } = getUserStore();
-    const { treeProgress, remainingDaysForComplete } = getTreeStore();
+const HomeScreen = observer(({ navigation }) => {
+    const { getUser, username, isChillingDay, remainingDaysUntilChilling } = getUserStore();
+    const { getTree, treeProgress, remainingDaysForComplete } = getTreeStore();
+
+    useEffect(() => {
+        (async () => {
+            const { id } = await getUser(Math.floor(Math.random() * 2) + 1);
+            await getTree(id);
+        })();
+    }, [getUser, getTree]);
 
     return (
         <ScreenLayout>
@@ -64,20 +71,13 @@ function HomeScreen({ navigation }) {
             </BottomContainer>
         </ScreenLayout>
     );
-}
+});
 
 export default function Home() {
     const Stack = createStackNavigator();
 
     return (
-        <Stack.Navigator
-            initialRouteName="Home"
-        // screenOptions={{
-        //     title: 'Chilling Day',
-        //     headerTintColor: COLORS.MAIN,
-        //     headerStyle: { backgroundColor: 'white' }
-        // }}
-        >
+        <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" options={{ headerShown: false }} component={HomeScreen} />
             <Stack.Screen name="Take" options={{ headerShown: false }} component={TakePhoto} />
             <Stack.Screen name="Select" options={{ title: 'Choose a photo', headerShown: false }} component={SelectPhoto} />
