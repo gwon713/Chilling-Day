@@ -165,9 +165,9 @@ const Cal_Tree = (userTree, userTotalEmissions, imageChilday)=>{
         tree_progress: ?, = ( 유저 총 감소 배출량 % 6.6 )/6.6 * 100 
         tree_remaining: ? = 6.6-((유저 총 감소 배출량)%6.6)   /   (유저 총 감소 배출량)/childay 
     }*/
-    userTree.total_tree = Math.round(userTotalEmissions/6.6);
-    userTree.tree_progress = Math.round(((userTotalEmissions%6.6)/6.6 * 100))
-    userTree.tree_remaining = Math.round((6.6-(userTotalEmissions%6.6))/(userTotalEmissions/imageChilday))
+    userTree.total_tree = Math.floor(userTotalEmissions/6.6); // 소수점 버림
+    userTree.tree_progress = Math.round(((userTotalEmissions%6.6)/6.6 * 100)) // 1그루 완성 퍼센트 게이지
+    userTree.tree_remaining = Math.floor((6.6-(userTotalEmissions%6.6))/(userTotalEmissions/imageChilday))
     console.log('현재 잔여 탄소량 : '+(userTotalEmissions%6.6));
     console.log('유저 일일 탄소 감소 평균 : '+(userTotalEmissions/imageChilday));
     return userTree;
@@ -188,7 +188,7 @@ router.post('/food/emission',(req, res, next)=>{
     const foodName = req.body.food_name;
     const foodPerson = parseInt(req.body.food_person);
     const foodData = req.body.food_data;
-    const cal_emission_res = Cal_emission(foodPerson,foodData);
+    const cal_emission_res = Cal_emission(foodPerson,foodData); // 현재 이미지에서 절감된 탄소 배출량 
     const cal_res = Cal_persent(cal_emission_res);
     const params = [userID];
     try {
