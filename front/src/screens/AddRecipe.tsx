@@ -63,7 +63,7 @@ const AddRecipe = observer(() => {
     const handleGoNextPress = () => {
         (async () => {
             const user = await getUser(userId);
-            getEmission(user.id, selectedIngredients, user.user_childay_cnt);
+            getEmission(user.id, selectedIngredients, user.totalChillingDay);
             navigation.navigate('Result');
         })();
     };
