@@ -167,7 +167,7 @@ const Cal_Tree = (userTree, userTotalEmissions, imageChilday)=>{
     }*/
     userTree.total_tree = Math.floor(userTotalEmissions/6.6); // 소수점 버림
     userTree.tree_progress = Math.round(((userTotalEmissions%6.6)/6.6 * 100)) // 1그루 완성 퍼센트 게이지
-    userTree.tree_remaining = Math.floor((6.6-(userTotalEmissions%6.6))/(userTotalEmissions/imageChilday))
+    userTree.tree_remaining = Math.floor((6.6-(userTotalEmissions%6.6))/(userTotalEmissions/imageChilday))+1;
     console.log('현재 잔여 탄소량 : '+(userTotalEmissions%6.6));
     console.log('유저 일일 탄소 감소 평균 : '+(userTotalEmissions/imageChilday));
     return userTree;
