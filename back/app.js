@@ -56,7 +56,7 @@ class App {
         });
         connection.connect((err) => { //database 접속
             if(err){
-                logger.error(err);
+                logger.error("DB Not Connect : ", err);
             }else{
                 logger.info("MySQL Connect");
             }
